@@ -7,13 +7,13 @@ import { useLoaderData, Form } from "react-router";
 import { getDb } from "~/db/client";
 import { users, links, analytics } from "~/db/schema";
 import { eq, desc, sql } from "drizzle-orm";
-import { env } from "./../../worker-configuration.d";
+import { Database } from "lucide-react";
 
 export async function loader({ params, context }: LoaderFunctionArgs) {
   const { username } = params;
 
   // 1. Ensure env is typed correctly for Cloudflare
-  const db = getDb(env);
+  const db = getDb(context.cloudflare.env);
 
   const user = await db.query.users.findFirst({
     where: eq(users.username, username?.toLowerCase() || ""),
@@ -33,12 +33,8 @@ export async function loader({ params, context }: LoaderFunctionArgs) {
 export async function action({ request, context }: ActionFunctionArgs) {
   const formData = await request.formData();
   const linkId = formData.get("linkId") as string;
-  const url = formData.get("url") as string;
-
-  if (!linkId || !url) return { error: "Missing data" };
-
+  const targetUrl = formData.get("targetUrl") as string;
   const db = getDb(context.cloudflare.env);
-
   // 1. Get info from the Request object instead of the browser 'window'
   const userAgent = request.headers.get("user-agent") || "unknown";
   const referrer = request.headers.get("referer") || "direct";
@@ -57,7 +53,7 @@ export async function action({ request, context }: ActionFunctionArgs) {
     country: country,
   });
 
-  return redirect(url);
+  return redirect(targetUrl); // Standard way to handle external navigation after an action
 }
 
 export default function PublicProfile() {
