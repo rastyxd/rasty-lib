@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+        <html>
+        <head>
+            <meta charset="UTF-8">
+            <title>Link-in-Bio Web App</title>
+            <style>
+/* From extension vscode.github */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+.vscode-dark img[src$=\#gh-light-mode-only],
+.vscode-light img[src$=\#gh-dark-mode-only],
+.vscode-high-contrast:not(.vscode-high-contrast-light) img[src$=\#gh-light-mode-only],
+.vscode-high-contrast-light img[src$=\#gh-dark-mode-only] {
+	display: none;
+}
+
+</style>
+            <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex/dist/katex.min.css">
+<link href="https://cdn.jsdelivr.net/npm/katex-copytex@latest/dist/katex-copytex.min.css" rel="stylesheet" type="text/css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/markdown.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
+<style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-ui, 'Ubuntu', 'Droid Sans', sans-serif;
+                font-size: 14px;
+                line-height: 1.6;
+            }
+        </style>
+        <style>
+.task-list-item {
+    list-style-type: none;
+}
+
+.task-list-item-checkbox {
+    margin-left: -20px;
+    vertical-align: middle;
+    pointer-events: none;
+}
+</style>
+<style>
+:root {
+  --color-note: #0969da;
+  --color-tip: #1a7f37;
+  --color-warning: #9a6700;
+  --color-severe: #bc4c00;
+  --color-caution: #d1242f;
+  --color-important: #8250df;
+}
+
+</style>
+<style>
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-note: #2f81f7;
+    --color-tip: #3fb950;
+    --color-warning: #d29922;
+    --color-severe: #db6d28;
+    --color-caution: #f85149;
+    --color-important: #a371f7;
+  }
+}
+
+</style>
+<style>
+.markdown-alert {
+  padding: 0.5rem 1rem;
+  margin-bottom: 16px;
+  color: inherit;
+  border-left: .25em solid #888;
+}
+
+.markdown-alert>:first-child {
+  margin-top: 0
+}
+
+.markdown-alert>:last-child {
+  margin-bottom: 0
+}
+
+.markdown-alert .markdown-alert-title {
+  display: flex;
+  font-weight: 500;
+  align-items: center;
+  line-height: 1
+}
+
+.markdown-alert .markdown-alert-title .octicon {
+  margin-right: 0.5rem;
+  display: inline-block;
+  overflow: visible !important;
+  vertical-align: text-bottom;
+  fill: currentColor;
+}
+
+.markdown-alert.markdown-alert-note {
+  border-left-color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-note .markdown-alert-title {
+  color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-important {
+  border-left-color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-important .markdown-alert-title {
+  color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-warning {
+  border-left-color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-warning .markdown-alert-title {
+  color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-tip {
+  border-left-color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-tip .markdown-alert-title {
+  color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-caution {
+  border-left-color: var(--color-caution);
+}
+
+.markdown-alert.markdown-alert-caution .markdown-alert-title {
+  color: var(--color-caution);
+}
+
+</style>
+        
+        </head>
+        <body class="vscode-body vscode-light">
+            <h1 id="link-in-bio-web-app">Link-in-Bio Web App</h1>
+<p>A modern link-in-bio application built with React Router 7, TypeScript, Tailwind CSS v4, Cloudflare D1, Clerk Authentication, and Drizzle ORM.</p>
+<h2 id="features">Features</h2>
+<ul>
+<li>🔐 <strong>Authentication</strong> - Secure auth with Clerk</li>
+<li>🗄️ <strong>Database</strong> - Cloudflare D1 (SQLite) with Drizzle ORM</li>
+<li>🎨 <strong>Modern UI</strong> - Tailwind CSS v4 with custom design system</li>
+<li>📊 <strong>Analytics</strong> - Track link clicks and user engagement</li>
+<li>🚀 <strong>Fast Deployment</strong> - Deploy to Cloudflare Pages</li>
+<li>🔧 <strong>Type-Safe</strong> - Full TypeScript support</li>
+</ul>
+<h2 id="tech-stack">Tech Stack</h2>
+<ul>
+<li><strong>Framework</strong>: React Router 7 (SSR)</li>
+<li><strong>Language</strong>: TypeScript</li>
+<li><strong>Styling</strong>: Tailwind CSS v4</li>
+<li><strong>Database</strong>: Cloudflare D1 (SQLite)</li>
+<li><strong>ORM</strong>: Drizzle</li>
+<li><strong>Auth</strong>: Clerk</li>
+<li><strong>Deployment</strong>: Cloudflare Pages</li>
+<li><strong>Tooling</strong>: Wrangler</li>
+</ul>
+<h2 id="getting-started">Getting Started</h2>
+<h3 id="prerequisites">Prerequisites</h3>
+<ul>
+<li>Node.js 18+</li>
+<li>npm or pnpm</li>
+<li>Cloudflare account</li>
+<li>Clerk account</li>
+</ul>
+<h3 id="1-install-dependencies">1. Install Dependencies</h3>
+<pre><code class="language-bash">npm install
+</code></pre>
+<h3 id="2-set-up-clerk">2. Set Up Clerk</h3>
+<ol>
+<li>Create a new application at <a href="https://clerk.com">clerk.com</a></li>
+<li>Get your publishable and secret keys</li>
+<li>Copy <code>.dev.vars.example</code> to <code>.dev.vars</code>:</li>
+</ol>
+<pre><code class="language-bash"><span class="hljs-built_in">cp</span> .dev.vars.example .dev.vars
+</code></pre>
+<ol start="4">
+<li>Add your Clerk keys to <code>.dev.vars</code>:</li>
+</ol>
+<pre><code>CLERK_PUBLISHABLE_KEY=pk_test_...
+CLERK_SECRET_KEY=sk_test_...
+</code></pre>
+<h3 id="3-set-up-cloudflare-d1-database">3. Set Up Cloudflare D1 Database</h3>
+<ol>
+<li>Create a D1 database:</li>
+</ol>
+<pre><code class="language-bash">npx wrangler d1 create link-in-bio-db
+</code></pre>
+<ol start="2">
+<li>Copy the database ID from the output and update <code>wrangler.toml</code>:</li>
+</ol>
+<pre><code class="language-toml"><span class="hljs-section">[[d1_databases]]</span>
+<span class="hljs-attr">binding</span> = <span class="hljs-string">&quot;DB&quot;</span>
+<span class="hljs-attr">database_name</span> = <span class="hljs-string">&quot;link-in-bio-db&quot;</span>
+<span class="hljs-attr">database_id</span> = <span class="hljs-string">&quot;paste-your-database-id-here&quot;</span>
+</code></pre>
+<ol start="3">
+<li>Generate database migration:</li>
+</ol>
+<pre><code class="language-bash">npm run db:generate
+</code></pre>
+<ol start="4">
+<li>Apply migration locally:</li>
+</ol>
+<pre><code class="language-bash">npx wrangler d1 execute link-in-bio-db --<span class="hljs-built_in">local</span> --file=./drizzle/migrations/0000_*.sql
+</code></pre>
+<ol start="5">
+<li>Apply migration to production (when ready):</li>
+</ol>
+<pre><code class="language-bash">npx wrangler d1 execute link-in-bio-db --remote --file=./drizzle/migrations/0000_*.sql
+</code></pre>
+<h3 id="4-run-development-server">4. Run Development Server</h3>
+<pre><code class="language-bash">npm run dev
+</code></pre>
+<p>Visit <code>http://localhost:5173</code></p>
+<h2 id="project-structure">Project Structure</h2>
+<pre><code>link-in-bio/
+├── app/
+│   ├── db/
+│   │   ├── schema.ts       # Database schema
+│   │   └── client.ts       # Database client
+│   ├── routes/
+│   │   ├── home.tsx        # Landing page
+│   │   ├── sign-in.tsx     # Sign in page
+│   │   ├── sign-up.tsx     # Sign up page
+│   │   ├── dashboard.tsx   # User dashboard
+│   │   └── $username.tsx   # Public profile
+│   ├── root.tsx            # Root layout with Clerk
+│   ├── routes.ts           # Route configuration
+│   ├── app.css             # Tailwind CSS
+│   └── env.d.ts            # TypeScript types
+├── drizzle/
+│   └── migrations/         # Database migrations
+├── wrangler.toml           # Cloudflare config
+├── drizzle.config.ts       # Drizzle config
+└── package.json
+</code></pre>
+<h2 id="database-schema">Database Schema</h2>
+<h3 id="users-table">Users Table</h3>
+<ul>
+<li><code>id</code> - Primary key</li>
+<li><code>clerkId</code> - Clerk user ID</li>
+<li><code>username</code> - Unique username</li>
+<li><code>displayName</code> - Display name</li>
+<li><code>bio</code> - User bio</li>
+<li><code>avatarUrl</code> - Profile picture</li>
+<li><code>theme</code> - UI theme</li>
+</ul>
+<h3 id="links-table">Links Table</h3>
+<ul>
+<li><code>id</code> - Primary key</li>
+<li><code>userId</code> - Foreign key to users</li>
+<li><code>title</code> - Link title</li>
+<li><code>url</code> - Link URL</li>
+<li><code>description</code> - Link description</li>
+<li><code>icon</code> - Icon/emoji</li>
+<li><code>position</code> - Display order</li>
+<li><code>enabled</code> - Visibility toggle</li>
+<li><code>clicks</code> - Click count</li>
+</ul>
+<h3 id="analytics-table">Analytics Table</h3>
+<ul>
+<li><code>id</code> - Primary key</li>
+<li><code>linkId</code> - Foreign key to links</li>
+<li><code>userId</code> - Foreign key to users</li>
+<li><code>clickedAt</code> - Timestamp</li>
+<li><code>referrer</code> - HTTP referrer</li>
+<li><code>userAgent</code> - User agent string</li>
+<li><code>country</code> - Country code</li>
+</ul>
+<h2 id="available-scripts">Available Scripts</h2>
+<ul>
+<li><code>npm run dev</code> - Start development server</li>
+<li><code>npm run build</code> - Build for production</li>
+<li><code>npm run start</code> - Start production server</li>
+<li><code>npm run typecheck</code> - Run TypeScript checks</li>
+<li><code>npm run deploy</code> - Deploy to Cloudflare Pages</li>
+<li><code>npm run db:generate</code> - Generate migrations</li>
+<li><code>npm run db:studio</code> - Open Drizzle Studio</li>
+</ul>
+<h2 id="deployment">Deployment</h2>
+<h3 id="deploy-to-cloudflare-pages">Deploy to Cloudflare Pages</h3>
+<ol>
+<li>Build the project:</li>
+</ol>
+<pre><code class="language-bash">npm run build
+</code></pre>
+<ol start="2">
+<li>Deploy:</li>
+</ol>
+<pre><code class="language-bash">npm run deploy
+</code></pre>
+<ol start="3">
+<li>
+<p>Set environment variables in Cloudflare Dashboard:</p>
+<ul>
+<li><code>CLERK_PUBLISHABLE_KEY</code></li>
+<li><code>CLERK_SECRET_KEY</code></li>
+</ul>
+</li>
+<li>
+<p>Apply database migration to production:</p>
+</li>
+</ol>
+<pre><code class="language-bash">npx wrangler d1 execute link-in-bio-db --remote --file=./drizzle/migrations/0000_*.sql
+</code></pre>
+<h2 id="environment-variables">Environment Variables</h2>
+<h3 id="development-devvars">Development (.dev.vars)</h3>
+<pre><code>CLERK_PUBLISHABLE_KEY=pk_test_...
+CLERK_SECRET_KEY=sk_test_...
+</code></pre>
+<h3 id="production-cloudflare-dashboard">Production (Cloudflare Dashboard)</h3>
+<ul>
+<li>Set in Cloudflare Pages settings</li>
+<li>Add the same variables as above</li>
+</ul>
+<h2 id="customization">Customization</h2>
+<h3 id="tailwind-theme">Tailwind Theme</h3>
+<p>Edit <code>app/app.css</code> to customize colors and design tokens:</p>
+<pre><code class="language-css"><span class="hljs-keyword">@theme</span> {
+  <span class="hljs-attr">--color-primary</span>: <span class="hljs-number">#6366f1</span>;
+  <span class="hljs-attr">--color-secondary</span>: <span class="hljs-number">#ec4899</span>;
+  <span class="hljs-comment">/* ... */</span>
+}
+</code></pre>
+<h3 id="database-schema-1">Database Schema</h3>
+<ol>
+<li>Edit <code>app/db/schema.ts</code></li>
+<li>Generate migration: <code>npm run db:generate</code></li>
+<li>Apply migration: <code>wrangler d1 execute...</code></li>
+</ol>
+<h2 id="features-to-add">Features to Add</h2>
+<ul class="contains-task-list">
+<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> Link analytics dashboard</li>
+<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> Custom themes/templates</li>
+<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> Social media integrations</li>
+<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> Custom domains</li>
+<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> Link scheduling</li>
+<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> QR code generation</li>
+<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> Export analytics</li>
+</ul>
+<h2 id="license">License</h2>
+<p>MIT</p>
+<h2 id="support">Support</h2>
+<p>For issues and questions, please open an issue on GitHub.</p>
+
+            <script async src="https://cdn.jsdelivr.net/npm/katex-copytex@latest/dist/katex-copytex.min.js"></script>
+            
+        </body>
+        </html>
