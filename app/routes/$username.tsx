@@ -3,14 +3,15 @@ import { useLoaderData } from "react-router";
 import { getDb } from "~/db/client";
 import { users, links, analytics } from "~/db/schema";
 import { eq, and } from "drizzle-orm";
-
+import "dotenv";
 export async function loader({ params, context, request }: LoaderFunctionArgs) {
   const { username } = params;
-
   if (!username) {
     throw new Response("Not Found", { status: 404 });
   }
-
+  if (!context.cloudflare) {
+    throw new Error("context.cloudflare is undefined");
+  }
   const db = getDb(context.cloudflare.env);
 
   const user = await db.query.users.findFirst({
@@ -39,7 +40,6 @@ export async function action({ params, context, request }: LoaderFunctionArgs) {
   }
 
   const db = getDb(context.cloudflare.env);
-
   const user = await db.query.users.findFirst({
     where: eq(users.username, username.toLowerCase()),
   });

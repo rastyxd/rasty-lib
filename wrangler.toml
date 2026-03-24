@@ -1,0 +1,9 @@
+name = "rasty-lib"
+main = "app/root.ts"
+compatibility_date = "2022-11-07"
+node_compat = true
+[[ d1_databases ]]
+binding = "DB"
+database_name = "rasty-lib-db"
+database_id = "eb9d9283-b28d-4564-9067-0122d2e9d357"
+migrations_dir = "drizzle"

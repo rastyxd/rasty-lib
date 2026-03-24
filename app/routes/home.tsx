@@ -1,6 +1,5 @@
 import { Link } from "react-router";
 import React from "react";
-
 export const SignedOut = (
   props: React.PropsWithChildren<React.PropsWithChildren<unknown>>,
 ) => {
@@ -12,8 +11,6 @@ export const UserButton = () => {
 };
 
 export default function Index() {
-  const [user, setUser]: any = React.useState(null);
-
   return (
     <div className="min-h-screen bg-linear-to-br from-primary/10 via-secondary/5 to-background">
       <nav className="container py-6">
@@ -22,12 +19,6 @@ export default function Index() {
             ReaLink
           </Link>
           <div className="flex items-center gap-4">
-            <Link
-              to="/dashboard"
-              className="rounded-lg bg-primary px-4 py-2 text-white hover:bg-primary-dark"
-            >
-              Dashboard
-            </Link>
             <UserButton />
 
             <Link
@@ -74,14 +65,6 @@ export default function Index() {
                 See Examples
               </Link>
             </SignedOut>
-            <div>
-              <Link
-                to="/dashboard"
-                className="rounded-lg bg-primary px-8 py-3 text-lg font-semibold text-white hover:bg-primary-dark"
-              >
-                Go to Dashboard
-              </Link>
-            </div>
           </div>
         </div>
 
