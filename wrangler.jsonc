@@ -1,0 +1,12 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "rasty-lib",
+  "compatibility_date": "2026-03-17",
+  "observability": {
+    "enabled": true
+  },
+  "main": "./workers/app.ts",
+  "compatibility_flags": [
+    "nodejs_compat"
+  ]
+}
