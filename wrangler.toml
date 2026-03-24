@@ -1,0 +1,17 @@
+name = "link-in-bio"
+compatibility_date = "2024-11-21"
+pages_build_output_dir = "./build/client"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "link-in-bio-db"
+database_id = "your-database-id-here"
+
+[vars]
+
+[env.production]
+vars = {}
+[[env.production.d1_databases]]
+binding = "DB"
+database_name = "link-in-bio-db"
+database_id = "your-production-database-id"

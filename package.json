@@ -1,0 +1,41 @@
+{
+  "name": "link-in-bio",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "react-router dev --port 3000",
+    "build": "react-router build",
+    "start": "react-router-serve ./build/server/index.js",
+    "typecheck": "tsc",
+    "deploy": "wrangler pages deploy ./build/client",
+    "db:generate": "drizzle-kit generate",
+    "db:migrate": "wrangler d1 execute link-in-bio-db --local --file=./drizzle/migrations/<migration-file>.sql",
+    "db:studio": "drizzle-kit studio"
+  },
+  "dependencies": {
+    "@firebase-oss/ui-react": "^7.0.2-beta",
+    "@react-router/cloudflare": "^7.13.2",
+    "@react-router/node": "^7.13.2",
+    "@react-router/serve": "^7.13.2",
+    "@tailwindcss/vite": "^4.2.2",
+    "drizzle-orm": "^0.45.1",
+    "firebase": "^12.11.0",
+    "isbot": "^5.1.0",
+    "react": "^19.2.4",
+    "react-dom": "^19.2.4",
+    "react-router": "^7.13.2",
+    "tailwindcss": "4.2.2",
+    "vite-tsconfig-paths": "^6.1.1"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^4.20241127.0",
+    "@react-router/dev": "^7.13.2",
+    "@types/react": "^18.3.12",
+    "@types/react-dom": "^18.3.1",
+    "drizzle-kit": "^0.31.10",
+    "tailwindcss": "^4.2.2",
+    "typescript": "^5.7.2",
+    "vite": "^7.3.1",
+    "wrangler": "^4.76.0"
+  }
+}
