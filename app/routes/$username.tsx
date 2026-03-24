@@ -1,21 +1,22 @@
-import { type LoaderFunctionArgs } from "react-router";
-import { useLoaderData } from "react-router";
+import {
+  type LoaderFunctionArgs,
+  type ActionFunctionArgs,
+  redirect,
+} from "react-router";
+import { useLoaderData, Form } from "react-router";
 import { getDb } from "~/db/client";
 import { users, links, analytics } from "~/db/schema";
-import { eq, and } from "drizzle-orm";
-import "dotenv";
-export async function loader({ params, context, request }: LoaderFunctionArgs) {
+import { eq, desc, sql } from "drizzle-orm";
+import { env } from "./../../worker-configuration.d";
+
+export async function loader({ params, context }: LoaderFunctionArgs) {
   const { username } = params;
-  if (!username) {
-    throw new Response("Not Found", { status: 404 });
-  }
-  if (!context.cloudflare) {
-    throw new Error("context.cloudflare is undefined");
-  }
-  const db = getDb(context.cloudflare.env);
+
+  // 1. Ensure env is typed correctly for Cloudflare
+  const db = getDb(env);
 
   const user = await db.query.users.findFirst({
-    where: eq(users.username, username.toLowerCase()),
+    where: eq(users.username, username?.toLowerCase() || ""),
   });
 
   if (!user) {
@@ -23,51 +24,40 @@ export async function loader({ params, context, request }: LoaderFunctionArgs) {
   }
 
   const userLinks = await db.query.links.findMany({
-    where: and(eq(links.userId, user.id), eq(links.enabled, true)),
-    orderBy: (links, { desc }) => [desc(links.position)],
+    where: eq(links.userId, user.id),
+    orderBy: [desc(links.position)],
   });
 
   return { user, links: userLinks };
 }
-
-export async function action({ params, context, request }: LoaderFunctionArgs) {
-  const { username } = params;
+export async function action({ request, context }: ActionFunctionArgs) {
   const formData = await request.formData();
   const linkId = formData.get("linkId") as string;
+  const url = formData.get("url") as string;
 
-  if (!username || !linkId) {
-    return { error: "Invalid request" };
-  }
+  if (!linkId || !url) return { error: "Missing data" };
 
   const db = getDb(context.cloudflare.env);
-  const user = await db.query.users.findFirst({
-    where: eq(users.username, username.toLowerCase()),
-  });
 
-  if (!user) {
-    return { error: "User not found" };
-  }
+  // 1. Get info from the Request object instead of the browser 'window'
+  const userAgent = request.headers.get("user-agent") || "unknown";
+  const referrer = request.headers.get("referer") || "direct";
 
-  // Increment click count
-  const [updatedLink] = await db
-    .update(links)
-    .set({ clicks: (links.clicks as any) + 1 })
-    .where(eq(links.id, linkId))
-    .returning();
-
-  // Track analytics
-  const userAgent = request.headers.get("user-agent") || "";
-  const referrer = request.headers.get("referer") || "";
-
+  // 2. Cloudflare provides the visitor's country via headers
+  const country = request.headers.get("cf-ipcountry") || "unknown";
   await db.insert(analytics).values({
-    id: crypto.randomUUID(),
-    linkId,
-    userId: user.id,
-    userAgent,
-    referrer,
+    id: crypto.randomUUID(), // Ensure your schema has an 'id' field if it's not auto-inc
+    linkId: linkId,
+    userId: Date.now().toString(), // Ensure your schema allows null for this field
+    // Drizzle/SQLite usually prefers a Date object or an ISO string
+    // depending on how you defined your timestamp column
+    clickedAt: new Date(),
+    referrer: referrer,
+    userAgent: userAgent,
+    country: country,
   });
 
-  return { success: true, url: updatedLink.url };
+  return redirect(url);
 }
 
 export default function PublicProfile() {
@@ -76,7 +66,7 @@ export default function PublicProfile() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-primary/5 via-background to-secondary/5">
       <main className="container py-12">
-        <div className="mx-auto max-w-2xl">
+        <div className="mx-auto max-w-2xl px-4">
           {/* Profile Header */}
           <div className="mb-8 text-center">
             <div className="mb-4 flex justify-center">
@@ -87,33 +77,24 @@ export default function PublicProfile() {
             <h1 className="mb-2 text-2xl font-bold">
               {user.displayName || `@${user.username}`}
             </h1>
-            {user.bio && <p className="text-text-muted">{user.bio}</p>}
+            {user.bio && <p className="text-muted-foreground">{user.bio}</p>}
           </div>
 
           {/* Links */}
           <div className="space-y-4">
             {links.length === 0 ? (
               <div className="py-12 text-center">
-                <p className="text-text-muted">No links yet</p>
+                <p className="text-muted-foreground">No links yet</p>
               </div>
             ) : (
               links.map((link) => (
-                <form key={link.id} method="post">
+                // Use the built-in Form component
+                <Form key={link.id} method="post">
                   <input type="hidden" name="linkId" value={link.id} />
+                  <input type="hidden" name="url" value={link.url} />
                   <button
                     type="submit"
-                    className="w-full rounded-xl bg-white p-4 text-left shadow-md transition-all hover:scale-[1.02] hover:shadow-lg"
-                    onClick={async (e) => {
-                      e.preventDefault();
-                      const form = e.currentTarget.closest("form");
-                      if (form) {
-                        await fetch(window.location.pathname, {
-                          method: "POST",
-                          body: new FormData(form),
-                        });
-                        window.open(link.url, "_blank");
-                      }
-                    }}
+                    className="w-full rounded-xl bg-white p-4 text-left shadow-md transition-all hover:scale-[1.01] hover:shadow-lg dark:bg-zinc-900"
                   >
                     <div className="flex items-center gap-4">
                       {link.icon && (
@@ -124,13 +105,13 @@ export default function PublicProfile() {
                       <div className="flex-1">
                         <h3 className="font-semibold">{link.title}</h3>
                         {link.description && (
-                          <p className="text-sm text-text-muted">
+                          <p className="text-sm text-muted-foreground">
                             {link.description}
                           </p>
                         )}
                       </div>
                       <svg
-                        className="h-5 w-5 flex-shrink-0 text-text-muted"
+                        className="h-5 w-5 text-muted-foreground"
                         fill="none"
                         viewBox="0 0 24 24"
                         stroke="currentColor"
@@ -144,19 +125,18 @@ export default function PublicProfile() {
                       </svg>
                     </div>
                   </button>
-                </form>
+                </Form>
               ))
             )}
           </div>
 
-          {/* Footer */}
           <div className="mt-12 text-center">
-            <p className="text-sm text-text-muted">
+            <p className="text-sm text-muted-foreground">
               Create your own link-in-bio page
             </p>
             <a
               href="/"
-              className="mt-2 inline-block font-semibold text-primary hover:text-primary-dark"
+              className="mt-2 inline-block font-semibold text-primary hover:underline"
             >
               Get Started Free
             </a>

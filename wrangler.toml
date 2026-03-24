@@ -1,7 +1,6 @@
 name = "rasty-lib"
-main = "app/root.ts"
-compatibility_date = "2022-11-07"
-node_compat = true
+main = "./build/server/index.js"
+compatibility_date = "2026-01-01"
 [[ d1_databases ]]
 binding = "DB"
 database_name = "rasty-lib-db"

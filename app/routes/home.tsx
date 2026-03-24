@@ -22,7 +22,7 @@ export default function Index() {
             <UserButton />
 
             <Link
-              to="/sign-in"
+              to="/login"
               className="rounded-lg border border-border px-4 py-2 hover:bg-surface"
             >
               Sign In
