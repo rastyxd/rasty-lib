@@ -63,13 +63,13 @@ const SignUpContainer = styled(Stack)(({ theme }) => ({
     }),
   },
 }));
-
-export default function page({
+function RegisterForm({
   disableCustomTheme,
 }: {
   disableCustomTheme?: boolean;
 }) {
   const [emailError, setEmailError] = React.useState(false);
+
   const [emailErrorMessage, setEmailErrorMessage] = React.useState("");
   const [passwordError, setPasswordError] = React.useState(false);
   const [passwordErrorMessage, setPasswordErrorMessage] = React.useState("");
@@ -128,7 +128,7 @@ export default function page({
   };
 
   return (
-    <AppTheme {...props}>
+    <AppTheme disableCustomTheme={disableCustomTheme}>
       <CssBaseline enableColorScheme />
       <ColorModeSelect sx={{ position: "fixed", top: "1rem", right: "1rem" }} />
       <SignUpContainer
