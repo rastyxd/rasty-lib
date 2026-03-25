@@ -3,7 +3,7 @@ import { signIn, auth, providerMap } from "@/auth";
 import { AuthError } from "next-auth";
 
 const SIGNIN_ERROR_URL = "/error";
-
+const PageProps: React.ComponentProps<"div"> = {};
 export default async function page(props: {
   searchParams: { callbackUrl: string | undefined };
 }) {
