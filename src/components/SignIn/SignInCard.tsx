@@ -71,7 +71,7 @@ export default function SignInCard() {
 
     let isValid = true;
 
-    if (!email.value ?? !/\S+@\S+\.\S+/.test(email.value)) {
+    if (!email.value || !/\S+@\S+\.\S+/.test(email.value)) {
       setEmailError(true);
       setEmailErrorMessage("Please enter a valid email address.");
       isValid = false;
@@ -80,7 +80,7 @@ export default function SignInCard() {
       setEmailErrorMessage("");
     }
 
-    if (!password.value ?? password.value.length < 6) {
+    if (!password.value || password.value.length < 6) {
       setPasswordError(true);
       setPasswordErrorMessage("Password must be at least 6 characters long.");
       isValid = false;
