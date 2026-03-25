@@ -1,11 +1,11 @@
-import * as React from 'react';
-import DarkModeIcon from '@mui/icons-material/DarkModeRounded';
-import LightModeIcon from '@mui/icons-material/LightModeRounded';
-import Box from '@mui/material/Box';
+import * as React from "react";
+import DarkModeIcon from "@mui/icons-material/DarkModeRounded";
+import LightModeIcon from "@mui/icons-material/LightModeRounded";
+import Box from "@mui/material/Box";
 import IconButton, { type IconButtonOwnProps } from "@mui/material/IconButton";
-import Menu from '@mui/material/Menu';
-import MenuItem from '@mui/material/MenuItem';
-import { useColorScheme } from '@mui/material/styles';
+import Menu from "@mui/material/Menu";
+import MenuItem from "@mui/material/MenuItem";
+import { useColorScheme } from "@mui/material/styles";
 
 export default function ColorModeIconDropdown(props: IconButtonOwnProps) {
   const { mode, systemMode, setMode } = useColorScheme();
@@ -17,7 +17,7 @@ export default function ColorModeIconDropdown(props: IconButtonOwnProps) {
   const handleClose = () => {
     setAnchorEl(null);
   };
-  const handleMode = (targetMode: 'system' | 'light' | 'dark') => () => {
+  const handleMode = (targetMode: "system" | "light" | "dark") => () => {
     setMode(targetMode);
     handleClose();
   };
@@ -49,9 +49,9 @@ export default function ColorModeIconDropdown(props: IconButtonOwnProps) {
         onClick={handleClick}
         disableRipple
         size="small"
-        aria-controls={open ? 'color-scheme-menu' : undefined}
+        aria-controls={open ? "color-scheme-menu" : undefined}
         aria-haspopup="true"
-        aria-expanded={open ? 'true' : undefined}
+        aria-expanded={open ? "true" : undefined}
         {...props}
       >
         {icon}
@@ -64,23 +64,23 @@ export default function ColorModeIconDropdown(props: IconButtonOwnProps) {
         onClick={handleClose}
         slotProps={{
           paper: {
-            variant: 'outlined',
+            variant: "outlined",
             elevation: 0,
             sx: {
-              my: '4px',
+              my: "4px",
             },
           },
         }}
-        transformOrigin={{ horizontal: 'right', vertical: 'top' }}
-        anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
+        transformOrigin={{ horizontal: "right", vertical: "top" }}
+        anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
       >
-        <MenuItem selected={mode === 'system'} onClick={handleMode('system')}>
+        <MenuItem selected={mode === "system"} onClick={handleMode("system")}>
           System
         </MenuItem>
-        <MenuItem selected={mode === 'light'} onClick={handleMode('light')}>
+        <MenuItem selected={mode === "light"} onClick={handleMode("light")}>
           Light
         </MenuItem>
-        <MenuItem selected={mode === 'dark'} onClick={handleMode('dark')}>
+        <MenuItem selected={mode === "dark"} onClick={handleMode("dark")}>
           Dark
         </MenuItem>
       </Menu>
