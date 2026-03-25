@@ -84,7 +84,7 @@ function RegisterForm({
 
     let isValid = true;
 
-    if (!email.value || !/\S+@\S+\.\S+/.test(email.value)) {
+    if (!email.value ?? !/\S+@\S+\.\S+/.test(email.value)) {
       setEmailError(true);
       setEmailErrorMessage("Please enter a valid email address.");
       isValid = false;
@@ -93,7 +93,7 @@ function RegisterForm({
       setEmailErrorMessage("");
     }
 
-    if (!password.value || password.value.length < 6) {
+    if (!password.value ?? password.value.length < 6) {
       setPasswordError(true);
       setPasswordErrorMessage("Password must be at least 6 characters long.");
       isValid = false;
@@ -102,7 +102,7 @@ function RegisterForm({
       setPasswordErrorMessage("");
     }
 
-    if (!name.value || name.value.length < 1) {
+    if (!name.value ?? name.value.length < 1) {
       setNameError(true);
       setNameErrorMessage("Name is required.");
       isValid = false;
@@ -115,7 +115,7 @@ function RegisterForm({
   };
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    if (nameError || emailError || passwordError) {
+    if (nameError ?? emailError ?? passwordError) {
       event.preventDefault();
       return;
     }
